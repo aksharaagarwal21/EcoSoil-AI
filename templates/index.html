@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSoil AI — Intelligent Soil Sustainability Platform</title>
+    <meta name="description" content="Advanced ML-powered soil analysis platform for environmental sustainability. Predict soil health, nutrient deficiencies, crop recommendations, and sustainability index.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+</head>
+<body>
+    <!-- Particle Canvas Background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-brand">
+            <div class="logo-icon">
+                <svg viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="18" stroke="url(#logoGrad)" stroke-width="2.5" fill="none"/>
+                    <path d="M20 8 L20 32 M12 16 Q20 10 28 16 M10 22 Q20 28 30 22" stroke="url(#logoGrad)" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <defs>
+                        <linearGradient id="logoGrad" x1="0" y1="0" x2="40" y2="40">
+                            <stop offset="0%" stop-color="#00e676"/>
+                            <stop offset="100%" stop-color="#00bfa5"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">EcoSoil<span class="accent">AI</span></span>
+                <span class="brand-tagline">Sustainable Intelligence</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#analysis" class="nav-link active" data-section="analysis">
+                <span class="nav-icon">🔬</span> Analysis
+            </a>
+            <a href="#dashboard" class="nav-link" data-section="dashboard">
+                <span class="nav-icon">📊</span> Dashboard
+            </a>
+            <a href="#sustainability" class="nav-link" data-section="sustainability">
+                <span class="nav-icon">🌱</span> Sustainability
+            </a>
+            <a href="#trends" class="nav-link" data-section="trends">
+                <span class="nav-icon">📈</span> Trends
+            </a>
+        </div>
+        <div class="nav-status">
+            <div class="status-dot"></div>
+            <span>ML Engine Active</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Powered by Machine Learning
+            </div>
+            <h1 class="hero-title">
+                Intelligent <span class="gradient-text">Environment</span>
+                <br>Sustainability Platform
+            </h1>
+            <p class="hero-subtitle">
+                Advanced ML-driven soil analysis for sustainable agriculture. Predict soil health,
+                detect nutrient deficiencies, get crop recommendations, and measure environmental impact.
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-value">4</span>
+                    <span class="stat-label">ML Models</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">25+</span>
+                    <span class="stat-label">Crops</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">14</span>
+                    <span class="stat-label">Soil Types</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">10</span>
+                    <span class="stat-label">Parameters</span>
+                </div>
+            </div>
+            <a href="#analysis" class="hero-cta" id="startAnalysisBtn">
+                <span>Start Soil Analysis</span>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M4 10h12M12 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+        <div class="hero-visual">
+            <div class="orbit-ring ring-1"></div>
+            <div class="orbit-ring ring-2"></div>
+            <div class="orbit-ring ring-3"></div>
+            <div class="center-orb">
+                <span>🌍</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analysis Section -->
+    <section class="section" id="analysis">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-icon">🔬</span>
+                Soil Analysis Input
+            </h2>
+            <p class="section-subtitle">Enter your soil sample parameters for comprehensive ML-powered analysis</p>
+        </div>
+
+        <form id="soilForm" class="analysis-form">
+            <div class="form-grid">
+                <!-- Macronutrients -->
+                <div class="form-group-card">
+                    <h3 class="card-title">
+                        <span class="title-icon">🧪</span>
+                        Macronutrients
+                    </h3>
+                    <div class="input-group">
+                        <label for="nitrogen">Nitrogen (N) <span class="unit">kg/ha</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="nitrogen" name="N" value="65" min="0" max="200" step="0.1" required>
+                            <div class="input-bar" data-max="200"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="phosphorus">Phosphorus (P) <span class="unit">kg/ha</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="phosphorus" name="P" value="42" min="0" max="150" step="0.1" required>
+                            <div class="input-bar" data-max="150"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="potassium">Potassium (K) <span class="unit">kg/ha</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="potassium" name="K" value="48" min="0" max="200" step="0.1" required>
+                            <div class="input-bar" data-max="200"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soil Chemistry -->
+                <div class="form-group-card">
+                    <h3 class="card-title">
+                        <span class="title-icon">⚗️</span>
+                        Soil Chemistry
+                    </h3>
+                    <div class="input-group">
+                        <label for="ph">pH Level</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="ph" name="pH" value="6.5" min="3" max="10" step="0.1" required>
+                            <div class="input-bar ph-bar" data-max="10"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="organic_carbon">Organic Carbon <span class="unit">%</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="organic_carbon" name="organic_carbon" value="1.2" min="0.1" max="5" step="0.1" required>
+                            <div class="input-bar" data-max="5"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="ec">Electrical Conductivity <span class="unit">dS/m</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="ec" name="EC" value="0.8" min="0.1" max="4" step="0.1" required>
+                            <div class="input-bar" data-max="4"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Environmental -->
+                <div class="form-group-card">
+                    <h3 class="card-title">
+                        <span class="title-icon">🌤️</span>
+                        Environmental
+                    </h3>
+                    <div class="input-group">
+                        <label for="temperature">Temperature <span class="unit">°C</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="temperature" name="temperature" value="26" min="5" max="45" step="0.1" required>
+                            <div class="input-bar" data-max="45"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="humidity">Humidity <span class="unit">%</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="humidity" name="humidity" value="62" min="10" max="100" step="0.1" required>
+                            <div class="input-bar" data-max="100"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="rainfall">Rainfall <span class="unit">mm</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="rainfall" name="rainfall" value="110" min="10" max="400" step="1" required>
+                            <div class="input-bar" data-max="400"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Physical Properties -->
+                <div class="form-group-card">
+                    <h3 class="card-title">
+                        <span class="title-icon">🏔️</span>
+                        Physical Properties
+                    </h3>
+                    <div class="input-group">
+                        <label for="moisture">Soil Moisture <span class="unit">%</span></label>
+                        <div class="input-wrapper">
+                            <input type="number" id="moisture" name="moisture" value="38" min="5" max="80" step="0.1" required>
+                            <div class="input-bar" data-max="80"></div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="soil_type">Soil Type</label>
+                        <div class="select-wrapper">
+                            <select id="soil_type" name="soil_type" required>
+                                <option value="Alluvial">Alluvial</option>
+                                <option value="Black Cotton">Black Cotton</option>
+                                <option value="Red">Red</option>
+                                <option value="Laterite">Laterite</option>
+                                <option value="Desert">Desert</option>
+                                <option value="Mountain">Mountain</option>
+                                <option value="Peaty">Peaty</option>
+                                <option value="Saline">Saline</option>
+                                <option value="Loamy" selected>Loamy</option>
+                                <option value="Clay">Clay</option>
+                                <option value="Sandy">Sandy</option>
+                                <option value="Silt">Silt</option>
+                                <option value="Chalky">Chalky</option>
+                                <option value="Podzol">Podzol</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-analyze" id="analyzeBtn">
+                    <span class="btn-icon">🧠</span>
+                    <span class="btn-text">Run ML Analysis</span>
+                    <div class="btn-loader" id="btnLoader"></div>
+                </button>
+                <button type="button" class="btn-secondary" id="randomBtn">
+                    <span>🎲</span> Random Sample
+                </button>
+                <button type="reset" class="btn-secondary" id="resetBtn">
+                    <span>↺</span> Reset
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Dashboard Results Section -->
+    <section class="section hidden" id="dashboard">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-icon">📊</span>
+                Analysis Results
+            </h2>
+            <p class="section-subtitle">ML-powered insights from your soil sample</p>
+        </div>
+
+        <!-- Health Score -->
+        <div class="results-grid">
+            <div class="health-card glass-card" id="healthCard">
+                <h3>Soil Health Score</h3>
+                <div class="health-gauge-container">
+                    <canvas id="healthGauge" width="240" height="240"></canvas>
+                    <div class="gauge-center">
+                        <span class="gauge-score" id="gaugeScore">--</span>
+                        <span class="gauge-grade" id="gaugeGrade">---</span>
+                    </div>
+                </div>
+                <p class="health-description" id="healthDesc"></p>
+            </div>
+
+            <!-- Nutrient Status -->
+            <div class="nutrient-card glass-card" id="nutrientCard">
+                <h3>Nutrient Status</h3>
+                <div class="nutrient-list" id="nutrientList"></div>
+            </div>
+
+            <!-- Nutrient Radar Chart -->
+            <div class="chart-card glass-card">
+                <h3>Nutrient Composition</h3>
+                <div class="chart-container">
+                    <canvas id="nutrientRadar"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crop Recommendations -->
+        <div class="crop-section">
+            <h3 class="subsection-title">
+                <span>🌾</span> Recommended Crops
+            </h3>
+            <div class="crop-grid" id="cropGrid"></div>
+        </div>
+    </section>
+
+    <!-- Sustainability Section -->
+    <section class="section hidden" id="sustainability">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-icon">🌱</span>
+                Sustainability Index
+            </h2>
+            <p class="section-subtitle">Environmental impact and sustainability assessment</p>
+        </div>
+
+        <div class="sustainability-grid">
+            <!-- Composite Score -->
+            <div class="sustainability-score-card glass-card" id="sustainCard">
+                <h3>Composite Sustainability Score</h3>
+                <div class="composite-score">
+                    <div class="score-ring" id="scoreRing">
+                        <svg viewBox="0 0 200 200">
+                            <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="12"/>
+                            <circle cx="100" cy="100" r="85" fill="none" stroke="url(#sustainGrad)" stroke-width="12"
+                                stroke-linecap="round" stroke-dasharray="534" stroke-dashoffset="534"
+                                id="scoreCircle" transform="rotate(-90 100 100)"/>
+                            <defs>
+                                <linearGradient id="sustainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#00e676"/>
+                                    <stop offset="50%" stop-color="#00bfa5"/>
+                                    <stop offset="100%" stop-color="#1de9b6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="score-text">
+                            <span class="score-value" id="sustainScore">--</span>
+                            <span class="score-grade" id="sustainGrade">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breakdown Chart -->
+            <div class="chart-card glass-card">
+                <h3>Sustainability Breakdown</h3>
+                <div class="chart-container">
+                    <canvas id="sustainChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Environmental Impact -->
+            <div class="impact-card glass-card" id="impactCard">
+                <h3>Environmental Impact</h3>
+                <div class="impact-metrics" id="impactMetrics"></div>
+            </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="recommendations-section" id="recsSection">
+            <h3 class="subsection-title">
+                <span>💡</span> Sustainability Recommendations
+            </h3>
+            <div class="recs-list" id="recsList"></div>
+        </div>
+    </section>
+
+    <!-- Trends Section -->
+    <section class="section hidden" id="trends">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="section-icon">📈</span>
+                Historical Trends
+            </h2>
+            <p class="section-subtitle">Track sustainability improvements over time</p>
+        </div>
+
+        <div class="trends-grid">
+            <div class="chart-card glass-card wide">
+                <h3>Sustainability Trend (12 Months)</h3>
+                <div class="chart-container large">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card glass-card">
+                <h3>Soil Quality Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="qualityChart"></canvas>
+                </div>
+            </div>
+            <div class="chart-card glass-card">
+                <h3>Environmental Metrics</h3>
+                <div class="chart-container">
+                    <canvas id="envChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="brand-name">EcoSoil<span class="accent">AI</span></span>
+                <p>Machine Learning for Sustainable Agriculture</p>
+            </div>
+            <div class="footer-info">
+                <p>Models: Gradient Boosting · Random Forest · KNN · Decision Tree</p>
+                <p>Domain: Sustainable Development · Precision Agriculture</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/charts.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
